@@ -1,0 +1,135 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+.auth-body{
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+background:linear-gradient(135deg,#e6f4ea,#ffffff);
+padding:20px;
+}
+
+.auth-container{
+background:white;
+padding:40px;
+border-radius:20px;
+width:430px;
+text-align:center;
+box-shadow:0 8px 25px rgba(0,0,0,0.10);
+}
+
+.auth-logo{
+width:70px;
+margin-bottom:15px;
+}
+
+.auth-container h2{
+margin-bottom:20px;
+font-size:34px;
+color:#131a22;
+}
+
+/* CUSTOMER / BUSINESS */
+
+.type-cards{
+display:flex;
+gap:15px;
+margin:25px 0;
+}
+
+.type-card{
+flex:1;
+padding:16px;
+border-radius:16px;
+background:#f1f1f1;
+cursor:pointer;
+transition:.3s;
+text-align:center;
+border:2px solid transparent;
+}
+
+.type-card:hover{
+transform:translateY(-3px);
+}
+
+.type-card.active{
+background:linear-gradient(135deg,#6a00ff,#00cfff);
+color:white;
+border:2px solid #131a22;
+}
+
+.type-card h3{
+margin-bottom:8px;
+}
+
+.type-card p{
+font-size:14px;
+margin-top:5px;
+}
+
+/* INPUTS */
+
+.auth-container input{
+width:100%;
+padding:14px;
+margin:12px 0;
+border-radius:12px;
+border:1px solid #d1d5db;
+font-size:15px;
+outline:none;
+transition:.3s;
+}
+
+.auth-container input:focus{
+border-color:#6a00ff;
+box-shadow:0 0 8px rgba(106,0,255,0.15);
+}
+
+/* BUTTON - MATCHES HTML (.cta) */
+
+.cta{
+width:100%;
+padding:14px;
+background:#131a22;
+color:white;
+border:none;
+border-radius:30px;
+margin-top:14px;
+cursor:pointer;
+font-size:16px;
+font-weight:bold;
+transition:.3s;
+}
+
+.cta:hover{
+background:#000;
+transform:translateY(-2px);
+}
+
+/* BUSINESS FIELDS */
+
+#businessFields{
+margin-top:10px;
+}
+
+/* LINKS */
+
+.auth-container p{
+margin-top:20px;
+color:#555;
+}
+
+.auth-container a{
+color:#0073e6;
+text-decoration:none;
+font-weight:bold;
+}
+
+.auth-container a:hover{
+text-decoration:underline;
+}

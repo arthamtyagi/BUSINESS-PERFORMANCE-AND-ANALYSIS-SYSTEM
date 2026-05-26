@@ -1,0 +1,436 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f8f8f8;
+}
+
+/* TOPBAR */
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 40px;
+background:#131a22;
+color:white;
+}
+
+.left{
+display:flex;
+align-items:center;
+}
+
+.logo{
+width:42px;
+margin-right:10px;
+}
+
+.brand{
+font-size:28px;
+font-weight:bold;
+}
+
+/* MENU */
+
+.menu{
+display:flex;
+align-items:center;
+}
+
+.menu a{
+color:#ddd;
+text-decoration:none;
+margin:0 14px;
+font-size:16px;
+transition:.3s;
+}
+
+.menu a:hover{
+color:white;
+}
+
+/* BUTTONS */
+
+.right button{
+margin-left:10px;
+cursor:pointer;
+}
+
+.login{
+background:transparent;
+border:1px solid #555;
+color:white;
+padding:10px 18px;
+border-radius:25px;
+}
+
+.primary{
+background:white;
+color:black;
+padding:10px 18px;
+border:none;
+border-radius:25px;
+}
+
+/* HERO */
+
+.hero{
+padding:70px 40px;
+background:linear-gradient(135deg,#e6f4ea,#ffffff);
+}
+
+.breadcrumb{
+color:gray;
+margin-bottom:18px;
+font-size:17px;
+}
+
+.hero h1{
+font-size:56px;
+margin-bottom:30px;
+line-height:1.2;
+}
+
+.cta{
+background:#131a22;
+color:white;
+padding:14px 28px;
+border:none;
+border-radius:28px;
+cursor:pointer;
+}
+
+/* PRODUCTS SECTION */
+
+.products{
+display:flex;
+gap:30px;
+padding:70px 40px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.product-btn{
+background:none;
+border:none;
+cursor:pointer;
+}
+
+.product-card{
+
+width:360px;
+
+padding:35px;
+
+border-radius:30px;
+
+color:white;
+
+text-align:left;
+
+position:relative;
+
+overflow:hidden;
+
+transition:.35s;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,0.18);
+
+}
+
+/* PRODUCTS THEME */
+
+.product-btn:nth-child(1) .product-card{
+
+background:
+linear-gradient(
+135deg,
+#0f172a,
+#2563eb
+);
+
+}
+
+/* BUSINESS ANALYZE THEME */
+
+.product-btn:nth-child(2) .product-card{
+
+background:
+linear-gradient(
+135deg,
+#064e3b,
+#10b981
+);
+
+}
+
+/* RESOURCES THEME */
+
+.product-btn:nth-child(3) .product-card{
+
+background:
+linear-gradient(
+135deg,
+#4c1d95,
+#ec4899
+);
+
+}
+
+.product-card:hover{
+
+transform:
+translateY(-12px)
+scale(1.03);
+
+}
+
+.product-card::before{
+
+content:"";
+
+position:absolute;
+
+top:-50px;
+
+right:-50px;
+
+width:170px;
+
+height:170px;
+
+background:
+rgba(255,255,255,0.15);
+
+border-radius:50%;
+
+}
+
+.product-card h3{
+
+font-size:34px;
+
+margin-bottom:18px;
+
+font-weight:bold;
+
+}
+
+.product-card p{
+
+font-size:18px;
+
+line-height:1.8;
+
+opacity:.95;
+
+}
+
+/* BENEFITS */
+
+.benefits{
+padding:50px 40px;
+}
+
+.benefits h2{
+margin-bottom:40px;
+font-size:42px;
+text-align:center;
+color:#131a22;
+}
+
+.cards{
+display:flex;
+gap:22px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.card{
+
+background:#efefef;
+
+padding:30px;
+
+border-radius:22px;
+
+width:380px;
+
+transition:.3s;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,0.08);
+
+}
+
+.card:hover{
+transform:translateY(-6px);
+}
+
+.card h3{
+font-size:30px;
+margin-bottom:18px;
+color:#131a22;
+}
+
+.card p{
+font-size:18px;
+line-height:1.7;
+color:#555;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.topbar{
+flex-direction:column;
+gap:20px;
+text-align:center;
+}
+
+.menu{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.product-card,
+.card{
+width:100%;
+}
+
+}
+
+/* ABOUT US */
+
+.aboutus{
+
+padding:70px 40px;
+
+background:#f8f8f8;
+
+}
+
+.aboutus h2{
+
+text-align:center;
+
+font-size:42px;
+
+margin-bottom:45px;
+
+color:#131a22;
+
+}
+
+.team-cards{
+
+display:flex;
+
+gap:28px;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+}
+
+.team-card{
+
+width:380px;
+
+background:white;
+
+padding:30px;
+
+border-radius:28px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.08);
+
+transition:.35s;
+
+text-align:center;
+
+}
+
+.team-card:hover{
+
+transform:
+translateY(-10px);
+
+}
+
+.team-card img{
+
+width:120px;
+
+height:120px;
+
+object-fit:cover;
+
+border-radius:50%;
+
+margin-bottom:20px;
+
+border:5px solid #efefef;
+
+}
+
+.team-card:nth-child(1){
+
+border-top:8px solid #2563eb;
+
+}
+
+.team-card:nth-child(2){
+
+border-top:8px solid #10b981;
+
+}
+
+.team-card:nth-child(3){
+
+border-top:8px solid #ec4899;
+
+}
+
+.team-card h3{
+
+font-size:30px;
+
+margin-bottom:8px;
+
+color:#131a22;
+
+}
+
+.team-card h4{
+
+font-size:18px;
+
+margin-bottom:18px;
+
+color:#555;
+
+}
+
+.team-card p{
+
+font-size:16px;
+
+line-height:1.8;
+
+color:#666;
+
+}

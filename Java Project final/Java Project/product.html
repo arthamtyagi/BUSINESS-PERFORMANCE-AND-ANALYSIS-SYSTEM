@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vynex - Product Management</title>
+    <link rel="stylesheet" href="product.css">
+</head>
+<body>
+
+<div class="product-container">
+
+    <h1>Product Management</h1>
+
+    <form class="product-form">
+
+        <!-- BASIC INFO -->
+        <div class="section">
+            <h2>Basic Information</h2>
+
+            <input type="text" placeholder="Product Name" required>
+            <textarea placeholder="Product Description"></textarea>
+            <input type="text" placeholder="Category">
+        </div>
+
+        <!-- PRICING -->
+        <div class="section">
+            <h2>Pricing Details</h2>
+
+            <input type="number" placeholder="Selling Price (₹)">
+            <input type="number" placeholder="Manufacturing Cost (₹)">
+            <input type="number" placeholder="Discount (%)">
+        </div>
+
+        <!-- SALES INFO -->
+        <div class="section">
+            <h2>Sales Information</h2>
+
+            <input type="number" placeholder="Stock Quantity">
+            <input type="text" placeholder="Supplier Name">
+            <input type="date" placeholder="Manufacture Date">
+        </div>
+
+        <!-- SUBMIT -->
+        <button type="submit" class="auth-btn">Save Product</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

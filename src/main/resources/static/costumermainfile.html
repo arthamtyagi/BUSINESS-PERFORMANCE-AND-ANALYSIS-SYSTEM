@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vynex</title>
+<link rel="stylesheet" href="costumermainfile.css">
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+    <div class="left">
+        <img src="logo.png" class="logo" alt="Vynex Logo">
+        <span class="brand">Vynex</span>
+    </div>
+
+    <div class="menu">
+        <a href="#">Vynex Free Tier</a>
+        <a href="#">Overview</a>
+        <a href="#">Categories</a>
+        <a href="#">Offers</a>
+        <a href="#">Terms</a>
+    </div>
+</div>
+
+<!-- HERO -->
+
+<section class="hero">
+    <p class="breadcrumb">Vynex Analytics Platform</p>
+
+    <h1>
+        Build Modern Applications
+        <br>
+        with Smart Analytics
+        on Vynex
+    </h1>
+</section>
+
+<!-- RESOURCES SECTION -->
+
+<section class="products">
+    <button class="product-btn" onclick="location.href='customerresourcefile.html'">
+        <div class="product-card">
+            <h3>Resources</h3>
+            <p>
+                View product information, stock availability and business data.
+            </p>
+        </div>
+    </button>
+</section>
+
+<!-- BENEFITS -->
+
+<section class="benefits">
+    <h2>Benefits of Vynex Analytics Platform</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>AI Powered Insights</h3>
+            <p>
+                Get real-time analytics and smart
+                predictions using AI-driven tools.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Real-Time Processing</h3>
+            <p>
+                Access live business data and
+                make faster decisions.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Secure & Reliable</h3>
+            <p>
+                Enterprise-grade security with
+                scalable architecture.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT US -->
+
+<section class="aboutus">
+    <h2>Meet The Team</h2>
+
+    <div class="team-cards">
+        <div class="team-card">
+            <img src="artham.jpg" alt="Artham Tyagi">
+            <h3>Artham Tyagi</h3>
+            <h4>Creative Director</h4>
+            <p>
+                Designed the creative identity of Vynex by creating the official logo, shaping the complete UI/UX experience, and establishing a modern visual style focused on innovation, usability, and clean interface aesthetics.
+            </p>
+        </div>
+
+        <div class="team-card">
+            <img src="krishna.jpg" alt="Krishna Tyagi">
+            <h3>Krishna Tyagi</h3>
+            <h4>Framework / Backend Developer</h4>
+            <p>
+                Designed the framework structure and backend architecture of Vynex, organizing system flow, application logic, and platform functionality with a focus on efficiency, scalability, and smooth system performance.
+            </p>
+        </div>
+
+        <div class="team-card">
+            <img src="Aman.jpeg" alt="Aman Kumar">
+            <h3>Aman Kumar</h3>
+            <h4>JDBC Integration & Database Connectivity</h4>
+            <p>
+                Designed database connectivity and JDBC integration for Vynex, managing structured data interaction, secure information flow, optimized connectivity handling, and reliable communication between application layers and databases.
+            </p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
+<script>
+// Session guard — redirects to signin if session expired or not logged in
+async function checkSession() {
+    const token = localStorage.getItem("vynex_token");
+    if (!token) { window.location.href = "signin.html"; return; }
+
+    const res = await fetch("/api/auth/check-session", {
+        headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) {
+        localStorage.clear();
+        window.location.href = "signin.html";
+    }
+}
+checkSession();
+setInterval(checkSession, 30000);
+</script>

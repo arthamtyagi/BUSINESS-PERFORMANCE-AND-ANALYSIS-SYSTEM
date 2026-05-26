@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Vynex</title>
+    <link rel="stylesheet" href="logininfo.css">
+</head>
+
+<body class="auth-body">
+
+<div class="auth-container">
+
+    <img src="logo.png" class="auth-logo">
+
+    <h2>Create your Vynex account</h2>
+
+    <!-- ACCOUNT TYPE CARDS -->
+
+    <div class="type-cards">
+
+        <div class="type-card active"
+        onclick="selectType('customer',this)">
+
+            <h3>Customer</h3>
+
+            <p>
+            For personal use & insights
+            </p>
+
+        </div>
+
+        <div class="type-card"
+        onclick="selectType('business',this)">
+
+            <h3>Business</h3>
+
+            <p>
+            For companies & analytics
+            </p>
+
+        </div>
+
+    </div>
+
+    <form>
+
+        <input
+        type="hidden"
+        id="accountType"
+        value="customer">
+
+        <input
+        type="text"
+        placeholder="Full Name"
+        required>
+
+        <input
+        type="email"
+        placeholder="Email address"
+        required>
+
+        <input
+        type="password"
+        placeholder="Password"
+        required>
+
+        <!-- BUSINESS FIELDS -->
+
+        <div id="businessFields"
+        style="display:none;">
+
+            <input
+            type="text"
+            placeholder="Company Name">
+
+            <input
+            type="text"
+            placeholder="Business Type (Startup, Enterprise, etc.)">
+
+            <input
+            type="number"
+            placeholder="Company Size (Employees)">
+
+            <input
+            type="text"
+            placeholder="Industry (Finance, Tech, Retail...)">
+
+        </div>
+
+        <!-- BUTTON -->
+
+        <button
+        id="createBtn"
+        class="cta"
+        type="button"
+        onclick="location.href='costumermainfile.html'">
+
+        Create a free account
+
+        </button>
+
+    </form>
+
+    <p>
+
+    Already have an account?
+
+    <a href="signin.html">
+
+    Sign in
+
+    </a>
+
+    </p>
+
+</div>
+
+<script>
+
+function selectType(type,element){
+
+document
+.getElementById(
+"accountType"
+).value=type;
+
+document
+.querySelectorAll(
+".type-card"
+)
+.forEach(card=>{
+
+card.classList
+.remove("active");
+
+});
+
+element.classList
+.add("active");
+
+const businessFields=
+document
+.getElementById(
+"businessFields"
+);
+
+const createBtn=
+document
+.getElementById(
+"createBtn"
+);
+
+if(type==="business"){
+
+businessFields.style.display=
+"block";
+
+createBtn.onclick=
+function(){
+
+location.href=
+"mainfile.html";
+
+};
+
+}
+
+else{
+
+businessFields.style.display=
+"none";
+
+createBtn.onclick=
+function(){
+
+location.href=
+"customermainfile.html";
+
+};
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

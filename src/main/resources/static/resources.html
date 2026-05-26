@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vynex Resources</title>
+    <link rel="stylesheet" href="resourcesdesign.css">
+</head>
+<body>
+
+<div class="topbar">
+    <h2>Vynex Resources</h2>
+</div>
+
+<div class="resource-container" id="productContainer">
+    <p style="padding:20px; color:#666;">Loading products...</p>
+</div>
+
+<script>
+// Session guard
+const token = localStorage.getItem("vynex_token");
+if (!token) window.location.href = "signin.html";
+
+async function loadProducts() {
+    const res      = await fetch("/api/products");
+    const products = await res.json();
+    const container = document.getElementById("productContainer");
+
+    if (products.length === 0) {
+        container.innerHTML = "<p style='padding:20px; color:#666;'>No products added yet. Go to Products to add some.</p>";
+        return;
+    }
+
+    container.innerHTML = products.map(p => {
+        const discounted = p.sellingPrice - (p.sellingPrice * (p.discountPercent / 100));
+        return `
+        <div class="product-card">
+            <div class="info">
+                <h1>${p.name}</h1>
+                <p>${p.description || ''}</p>
+                <div class="details">
+                    <span>Manufacturing Cost: <strong>₹${p.manufacturingCost.toFixed(2)}</strong></span>
+                    <span>Selling Price: <strong>₹${discounted.toFixed(2)}
+                        ${p.discountPercent > 0 ? `<small style="color:green">(${p.discountPercent}% off)</small>` : ''}
+                    </strong></span>
+                    <span>Stock Available: <strong>${p.stockQuantity}</strong></span>
+                    <span>Supplier: <strong>${p.supplierName || '-'}</strong></span>
+                    <span>Category: <strong>${p.category || '-'}</strong></span>
+                </div>
+            </div>
+        </div>`;
+    }).join("");
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>

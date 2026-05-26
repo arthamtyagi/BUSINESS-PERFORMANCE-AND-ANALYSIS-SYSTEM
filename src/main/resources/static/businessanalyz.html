@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vynex Business Analyze</title>
+    <link rel="stylesheet" href="businessanalyz.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="left">
+        <img src="logo.png" class="logo" alt="Vynex Logo">
+        <span class="brand">Vynex</span>
+    </div>
+</div>
+
+<!-- HERO + SUMMARY -->
+<section class="hero">
+    <div class="hero-text">
+        <p class="breadcrumb">Vynex / Business Analyze</p>
+        <h1>Track overall business growth, profit and product performance</h1>
+    </div>
+
+    <div class="hero-card">
+        <h3>Business Summary</h3>
+        <div class="summary-grid">
+            <div class="summary-box">
+                <span>Total Revenue</span>
+                <strong id="totalRevenue">—</strong>
+            </div>
+            <div class="summary-box">
+                <span>Total Profit</span>
+                <strong id="totalProfit">—</strong>
+            </div>
+            <div class="summary-box">
+                <span>Total Loss</span>
+                <strong id="totalLoss">—</strong>
+            </div>
+            <div class="summary-box">
+                <span>Growth Rate</span>
+                <strong id="growthRate">—</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN CHART -->
+<section class="section">
+    <div class="section-head">
+        <h2>Revenue by Product</h2>
+        <p>Total revenue generated per product from all orders.</p>
+    </div>
+    <div class="graph-box large-graph">
+        <canvas id="revenueChart"></canvas>
+    </div>
+</section>
+
+<!-- PER PRODUCT TABLE -->
+<section class="section">
+    <div class="section-head">
+        <h2>Product Performance</h2>
+    </div>
+    <div class="product-grid" id="productGrid">
+        <p style="padding:20px; color:#666;">Loading...</p>
+    </div>
+</section>
+
+<script>
+const token = localStorage.getItem("vynex_token");
+if (!token) window.location.href = "signin.html";
+
+async function loadStats() {
+    const res = await fetch("/api/products/stats", {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    if (!res.ok) { window.location.href = "signin.html"; return; }
+
+    const data     = await res.json();
+    const s        = data.summary;
+    const products = data.products;
+
+    // Summary
+    document.getElementById("totalRevenue").textContent = "₹ " + s.totalRevenue.toFixed(2);
+    document.getElementById("totalProfit").textContent  = "₹ " + s.totalProfit.toFixed(2);
+    document.getElementById("totalLoss").textContent    = "₹ " + s.totalLoss.toFixed(2);
+    document.getElementById("growthRate").textContent   = s.growthRate + " %";
+
+    // Bar chart — revenue per product
+    new Chart(document.getElementById("revenueChart"), {
+        type: "bar",
+        data: {
+            labels: products.map(p => p.name),
+            datasets: [{
+                label: "Revenue (₹)",
+                data: products.map(p => p.revenue),
+                backgroundColor: ["#2563eb","#10b981","#ec4899","#f59e0b","#8b5cf6","#ef4444","#06b6d4","#84cc16"],
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // Product cards
+    const grid = document.getElementById("productGrid");
+    if (products.length === 0) {
+        grid.innerHTML = "<p style='padding:20px;color:#666;'>No orders yet. Products will appear here once customers start buying.</p>";
+        return;
+    }
+
+    const badgeClass = g => g === "High Growth" ? "growth" : g === "Stable" ? "stable" : "warning";
+
+    grid.innerHTML = products.map(p => `
+        <div class="product-card">
+            <div class="product-top">
+                <h3>${p.name}</h3>
+                <span class="badge ${badgeClass(p.growth)}">${p.growth}</span>
+            </div>
+            <div class="mini-grid">
+                <div class="mini-box"><p>Revenue</p><strong>₹ ${p.revenue.toFixed(2)}</strong></div>
+                <div class="mini-box"><p>Profit</p><strong>₹ ${p.profit.toFixed(2)}</strong></div>
+                <div class="mini-box"><p>Units Sold</p><strong>${p.totalSold}</strong></div>
+                <div class="mini-box"><p>Trend</p><strong>${p.trend}</strong></div>
+            </div>
+        </div>
+    `).join("");
+}
+
+loadStats();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vynex</title>
+    <link rel="stylesheet" href="mainfiledesign.css">
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <div class="left">
+        <img src="logo.png" class="logo">
+        <span class="brand">Vynex</span>
+    </div>
+
+    <div class="menu">
+        <a href="signup.html">Vynex Free Tier</a>
+        <a href="signup.html">Overview</a>
+        <a href="signup.html">Categories</a>
+        <a href="signup.html">Offers</a>
+        <a href="signup.html">Terms</a>
+    </div>
+
+    <div class="right">
+        <button class="login" onclick="goTo('signin.html')">Sign in</button>
+        <button class="primary" onclick="goTo('signup.html')">Create account</button>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <p class="breadcrumb">Vynex Analytics Platform</p>
+    <h1>
+        Build Modern Applications<br>
+        with Smart Analytics on Vynex
+    </h1>
+    <button class="cta" onclick="goTo('signup.html')">Create a free account</button>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits">
+<div class="cards">
+    <div class="card">
+        <h3>AI Powered Insights</h3>
+        <p>Get real-time analytics and smart predictions using AI-driven tools.</p>
+    </div>
+    <div class="card">
+        <h3>Real-Time Processing</h3>
+        <p>Access live business data and make faster decisions.</p>
+    </div>
+    <div class="card">
+        <h3>Secure & Reliable</h3>
+        <p>Enterprise-grade security with scalable architecture.</p>
+    </div>
+</div>
+</section>
+
+<script>
+// Tell the backend a user has landed — triggers pre-warm thread server-side
+fetch("/api/session/prewarm", { method: "POST" }).catch(() => {});
+
+function goTo(page) {
+    window.location.href = page;
+}
+</script>
+
+</body>
+</html>

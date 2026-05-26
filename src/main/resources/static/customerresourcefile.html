@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vynex Resources</title>
+    <link rel="stylesheet" href="customerresourcefile.css">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-left">
+        <h2>Vynex Resources</h2>
+    </div>
+    <div class="topbar-right">
+        <button class="cart-btn" type="button" onclick="toggleCart()">
+            Cart <span id="cartCount">0</span>
+        </button>
+    </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3>Cart</h3>
+        <button type="button" class="close-cart" onclick="toggleCart()">×</button>
+    </div>
+    <div id="cartItems" class="cart-items">
+        <p class="empty-cart">No items added yet.</p>
+    </div>
+    <button id="placeOrderBtn" class="place-order-btn" type="button" onclick="placeOrder()" style="display:none;">
+        Place Order
+    </button>
+</div>
+
+<!-- PRODUCTS LOADED FROM DB -->
+<div class="resource-container" id="productContainer">
+    <p style="padding:20px;">Loading products...</p>
+</div>
+
+<script>
+// Session guard
+const token = localStorage.getItem("vynex_token");
+if (!token) window.location.href = "signin.html";
+
+const cart = [];
+
+// ── Load products from backend ────────────────────────────────────────────
+async function loadProducts() {
+    const res = await fetch("/api/products");
+    const products = await res.json();
+    const container = document.getElementById("productContainer");
+
+    if (products.length === 0) {
+        container.innerHTML = "<p style='padding:20px;'>No products available yet.</p>";
+        return;
+    }
+
+    container.innerHTML = products.map(p => {
+        const discountedPrice = p.sellingPrice - (p.sellingPrice * (p.discountPercent / 100));
+        return `
+        <div class="product-card">
+            <div class="info">
+                <h1>${p.name}</h1>
+                <p>${p.description || ''}</p>
+                <div class="details">
+                    <span>Category: <strong>${p.category || '-'}</strong></span>
+                    <span>Price: <strong>₹${discountedPrice.toFixed(2)}</strong>
+                        ${p.discountPercent > 0 ? `<small style="color:green"> (${p.discountPercent}% off)</small>` : ''}
+                    </span>
+                    <span>In Stock: <strong>${p.stockQuantity}</strong></span>
+                    <span>Supplier: <strong>${p.supplierName || '-'}</strong></span>
+                </div>
+
+                <button class="buy-btn" type="button"
+                    onclick="toggleBuyForm('panel_${p.id}')">Buy</button>
+
+                <div class="buy-panel" id="panel_${p.id}">
+                    <h3>Buy ${p.name}</h3>
+                    <label>Quantity</label>
+                    <input type="number" min="1" max="${p.stockQuantity}"
+                        placeholder="Enter quantity" id="qty_${p.id}">
+                    <label>Delivery Address</label>
+                    <textarea placeholder="Enter delivery address" id="addr_${p.id}"></textarea>
+                    <button class="add-cart-btn" type="button"
+                        onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${discountedPrice.toFixed(2)}, ${p.stockQuantity})">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    }).join("");
+}
+
+function toggleBuyForm(panelId) {
+    const panel = document.getElementById(panelId);
+    const isOpen = panel.classList.contains("show");
+    document.querySelectorAll(".buy-panel").forEach(p => p.classList.remove("show"));
+    if (!isOpen) panel.classList.add("show");
+}
+
+function addToCart(productId, productName, price, maxStock) {
+    const qtyInput  = document.getElementById(`qty_${productId}`);
+    const addrInput = document.getElementById(`addr_${productId}`);
+    const quantity  = parseInt(qtyInput.value);
+    const address   = addrInput.value.trim();
+
+    if (!quantity || quantity <= 0) { alert("Please enter a valid quantity."); return; }
+    if (quantity > maxStock)        { alert("Not enough stock available.");    return; }
+    if (!address)                   { alert("Please enter delivery address."); return; }
+
+    cart.push({ productId, productName, quantity, address, totalPrice: price * quantity });
+    updateCartUI();
+    qtyInput.value  = "";
+    addrInput.value = "";
+    document.getElementById(`panel_${productId}`).classList.remove("show");
+}
+
+function cancelItem(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+}
+
+function updateCartUI() {
+    const cartCount  = document.getElementById("cartCount");
+    const cartItems  = document.getElementById("cartItems");
+    const placeBtn   = document.getElementById("placeOrderBtn");
+
+    cartCount.textContent = cart.length;
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="empty-cart">No items added yet.</p>';
+        placeBtn.style.display = "none";
+        return;
+    }
+
+    placeBtn.style.display = "block";
+    cartItems.innerHTML = cart.map((item, i) => `
+        <div class="cart-item">
+            <h4>${i + 1}. ${item.productName}</h4>
+            <p><strong>Quantity:</strong> ${item.quantity}</p>
+            <p><strong>Total:</strong> ₹${item.totalPrice.toFixed(2)}</p>
+            <p><strong>Address:</strong> ${item.address}</p>
+            <button class="cancel-btn" type="button" onclick="cancelItem(${i})">Remove</button>
+        </div>
+    `).join("");
+}
+
+function toggleCart() {
+    document.getElementById("cartDrawer").classList.toggle("open");
+}
+
+async function placeOrder() {
+    if (cart.length === 0) { alert("Cart is empty."); return; }
+
+    const res = await fetch("/api/products/order", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify(cart)
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+        alert("✓ Order Placed Successfully!");
+        cart.length = 0;
+        updateCartUI();
+        toggleCart();
+        loadProducts(); // refresh stock counts
+    } else {
+        alert("Error: " + data.message);
+    }
+}
+
+// Load on page open
+loadProducts();
+</script>
+
+</body>
+</html>

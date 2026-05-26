@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Vynex</title>
+    <link rel="stylesheet" href="logininfo.css">
+</head>
+<body class="auth-body">
+
+<div class="auth-container">
+
+    <img src="logo.png" class="auth-logo">
+    <h2>Create your Vynex account</h2>
+
+    <!-- ACCOUNT TYPE CARDS -->
+    <div class="type-cards">
+        <div class="type-card active" onclick="selectType('customer', this)">
+            <h3>Customer</h3>
+            <p>For personal use & insights</p>
+        </div>
+        <div class="type-card" onclick="selectType('business', this)">
+            <h3>Business</h3>
+            <p>For companies & analytics</p>
+        </div>
+    </div>
+
+    <form id="signupForm">
+        <input type="hidden" id="accountType" value="customer">
+
+        <input type="text"  id="fullName" placeholder="Full Name" required>
+        <input type="email" id="email"    placeholder="Email address" required>
+        <input type="password" id="password" placeholder="Password" required>
+
+        <!-- BUSINESS FIELDS -->
+        <div id="businessFields" style="display:none;">
+            <input type="text"   id="companyName"  placeholder="Company Name">
+            <input type="text"   id="businessType" placeholder="Business Type (Startup, Enterprise, etc.)">
+            <input type="number" id="companySize"  placeholder="Company Size (Employees)">
+            <input type="text"   id="industry"     placeholder="Industry (Finance, Tech, Retail...)">
+        </div>
+
+        <button type="submit" class="cta">Create a free account</button>
+        <p id="msg" style="margin-top:10px; color:red;"></p>
+    </form>
+
+    <p>Already have an account? <a href="signin.html">Sign in</a></p>
+
+</div>
+
+<script>
+function selectType(type, element) {
+    document.getElementById("accountType").value = type;
+    document.querySelectorAll(".type-card").forEach(c => c.classList.remove("active"));
+    element.classList.add("active");
+    document.getElementById("businessFields").style.display =
+        type === "business" ? "block" : "none";
+}
+
+document.getElementById("signupForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const accountType = document.getElementById("accountType").value;
+    const msg         = document.getElementById("msg");
+
+    const body = {
+        fullName:    document.getElementById("fullName").value,
+        email:       document.getElementById("email").value,
+        password:    document.getElementById("password").value,
+        accountType: accountType
+    };
+
+    if (accountType === "business") {
+        body.companyName  = document.getElementById("companyName").value;
+        body.businessType = document.getElementById("businessType").value;
+        body.companySize  = parseInt(document.getElementById("companySize").value) || 0;
+        body.industry     = document.getElementById("industry").value;
+    }
+
+    const res  = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+        msg.style.color = "green";
+        msg.textContent = data.message + " Redirecting to sign in...";
+        setTimeout(() => window.location.href = "signin.html", 1000);
+    } else {
+        msg.style.color = "red";
+        msg.textContent = data.message;
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vynex Resources</title>
+<link rel="stylesheet" href="customerresourcefile.css">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-left">
+        <h2>Vynex Resources</h2>
+    </div>
+
+    <div class="topbar-right">
+        <button class="cart-btn" type="button" onclick="toggleCart()">
+            Cart <span id="cartCount">0</span>
+        </button>
+    </div>
+</div>
+
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3>Cart</h3>
+        <button type="button" class="close-cart" onclick="toggleCart()">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items">
+        <p class="empty-cart">No items added yet.</p>
+    </div>
+
+    <button
+        id="placeOrderBtn"
+        class="place-order-btn"
+        type="button"
+        onclick="placeOrder()"
+    >
+        Place Order
+    </button>
+</div>
+
+<div class="resource-container">
+
+    <div class="product-card">
+        <img src="image1.png" alt="Product 1">
+        <div class="info">
+            <h1>Product Name</h1>
+            <p>Small Description</p>
+
+            <div class="details">
+                <span>Manufacturing Cost:</span>
+                <span>Selling Cost:</span>
+                <span>Quantity Available:</span>
+                <span>Supplier Name:</span>
+            </div>
+
+            <button class="buy-btn" type="button" onclick="toggleBuyForm(1)">Buy</button>
+
+            <div class="buy-panel" id="buyPanel1">
+                <h3>Buy Product</h3>
+
+                <label for="qty1">Quantity</label>
+                <input type="number" min="1" placeholder="Enter quantity" id="qty1">
+
+                <label for="addr1">Address</label>
+                <textarea placeholder="Enter delivery address" id="addr1"></textarea>
+
+                <button class="add-cart-btn" type="button" onclick="addToCart(1, 'Product Name')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="image2.png" alt="Product 2">
+        <div class="info">
+            <h1>Product Name</h1>
+            <p>Small Description</p>
+
+            <div class="details">
+                <span>Manufacturing Cost:</span>
+                <span>Selling Cost:</span>
+                <span>Quantity Available:</span>
+                <span>Supplier Name:</span>
+            </div>
+
+            <button class="buy-btn" type="button" onclick="toggleBuyForm(2)">Buy</button>
+
+            <div class="buy-panel" id="buyPanel2">
+                <h3>Buy Product</h3>
+
+                <label for="qty2">Quantity</label>
+                <input type="number" min="1" placeholder="Enter quantity" id="qty2">
+
+                <label for="addr2">Address</label>
+                <textarea placeholder="Enter delivery address" id="addr2"></textarea>
+
+                <button class="add-cart-btn" type="button" onclick="addToCart(2, 'Product Name')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="image3.png" alt="Product 3">
+        <div class="info">
+            <h1>Product Name</h1>
+            <p>Small Description</p>
+
+            <div class="details">
+                <span>Manufacturing Cost:</span>
+                <span>Selling Cost:</span>
+                <span>Quantity Available:</span>
+                <span>Supplier Name:</span>
+            </div>
+
+            <button class="buy-btn" type="button" onclick="toggleBuyForm(3)">Buy</button>
+
+            <div class="buy-panel" id="buyPanel3">
+                <h3>Buy Product</h3>
+
+                <label for="qty3">Quantity</label>
+                <input type="number" min="1" placeholder="Enter quantity" id="qty3">
+
+                <label for="addr3">Address</label>
+                <textarea placeholder="Enter delivery address" id="addr3"></textarea>
+
+                <button class="add-cart-btn" type="button" onclick="addToCart(3, 'Product Name')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="image4.png" alt="Product 4">
+        <div class="info">
+            <h1>Product Name</h1>
+            <p>Small Description</p>
+
+            <div class="details">
+                <span>Manufacturing Cost:</span>
+                <span>Selling Cost:</span>
+                <span>Quantity Available:</span>
+                <span>Supplier Name:</span>
+            </div>
+
+            <button class="buy-btn" type="button" onclick="toggleBuyForm(4)">Buy</button>
+
+            <div class="buy-panel" id="buyPanel4">
+                <h3>Buy Product</h3>
+
+                <label for="qty4">Quantity</label>
+                <input type="number" min="1" placeholder="Enter quantity" id="qty4">
+
+                <label for="addr4">Address</label>
+                <textarea placeholder="Enter delivery address" id="addr4"></textarea>
+
+                <button class="add-cart-btn" type="button" onclick="addToCart(4, 'Product Name')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="image5.png" alt="Product 5">
+        <div class="info">
+            <h1>Product Name</h1>
+            <p>Small Description</p>
+
+            <div class="details">
+                <span>Manufacturing Cost:</span>
+                <span>Selling Cost:</span>
+                <span>Quantity Available:</span>
+                <span>Supplier Name:</span>
+            </div>
+
+            <button class="buy-btn" type="button" onclick="toggleBuyForm(5)">Buy</button>
+
+            <div class="buy-panel" id="buyPanel5">
+                <h3>Buy Product</h3>
+
+                <label for="qty5">Quantity</label>
+                <input type="number" min="1" placeholder="Enter quantity" id="qty5">
+
+                <label for="addr5">Address</label>
+                <textarea placeholder="Enter delivery address" id="addr5"></textarea>
+
+                <button class="add-cart-btn" type="button" onclick="addToCart(5, 'Product Name')">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const cart = [];
+
+    function toggleBuyForm(index) {
+        const panel = document.getElementById(`buyPanel${index}`);
+        const isOpen = panel.classList.contains("show");
+
+        document.querySelectorAll(".buy-panel").forEach(p => p.classList.remove("show"));
+
+        if (!isOpen) {
+            panel.classList.add("show");
+        }
+    }
+
+    function addToCart(index, productName) {
+        const qtyInput = document.getElementById(`qty${index}`);
+        const addrInput = document.getElementById(`addr${index}`);
+
+        const quantity = qtyInput.value.trim();
+        const address = addrInput.value.trim();
+
+        if (!quantity || Number(quantity) <= 0) {
+            alert("Please enter a valid quantity.");
+            return;
+        }
+
+        if (!address) {
+            alert("Please enter delivery address.");
+            return;
+        }
+
+        cart.push({
+            productName,
+            quantity,
+            address
+        });
+
+        updateCartUI();
+
+        qtyInput.value = "";
+        addrInput.value = "";
+        document.getElementById(`buyPanel${index}`).classList.remove("show");
+    }
+
+    function cancelItem(index) {
+        cart.splice(index, 1);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const cartCount = document.getElementById("cartCount");
+        const cartItems = document.getElementById("cartItems");
+        const placeBtn = document.getElementById("placeOrderBtn");
+
+        cartCount.textContent = cart.length;
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<p class="empty-cart">No items added yet.</p>';
+            placeBtn.style.display = "none";
+            return;
+        }
+
+        placeBtn.style.display = "block";
+
+        cartItems.innerHTML = cart.map((item, i) => `
+            <div class="cart-item">
+                <h4>${i + 1}. ${item.productName}</h4>
+                <p><strong>Quantity:</strong> ${item.quantity}</p>
+                <p><strong>Address:</strong> ${item.address}</p>
+                <button class="cancel-btn" type="button" onclick="cancelItem(${i})">
+                    Cancel Product
+                </button>
+            </div>
+        `).join("");
+    }
+
+    function toggleCart() {
+        document.getElementById("cartDrawer").classList.toggle("open");
+    }
+
+    function placeOrder() {
+        if (cart.length === 0) {
+            alert("Cart is empty.");
+            return;
+        }
+
+        alert("Order Placed Successfully!");
+        cart.length = 0;
+        updateCartUI();
+        toggleCart();
+    }
+</script>
+
+</body>
+</html>
